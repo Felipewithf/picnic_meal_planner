@@ -1,0 +1,25 @@
+body {
+    padding-top: 20px;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .tabs .indicator {
+    background-color: #26a69a;
+  }
+  
+  .tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: transparent;
+  }
+  
+  .weather-icon {
+    font-size: 4rem; 
+  }
+  
+  .animated {
+    animation-duration: 1s;
+  }
+  
