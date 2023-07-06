@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+
+  <title>Meal Planner</title>
+</head>
+<body>
+  <div class="container">
+    <h2>Weekly Meal Planner</h2>
+
+    <div class="row">
+        <div class="input-field col s8">
+          <input type="text" id="city-input">
+          <label for="city-input">Enter City</label>
+        </div>
+        <div class="col s4">
+          <button class="btn waves-effect waves-light" id="search-btn">Search</button>
+        </div>
+      </div>
+
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s2"><a href="#day1">Monday</a></li>
+          <li class="tab col s2"><a href="#day2">Tuesday</a></li>
+          <li class="tab col s2"><a href="#day3">Wednesday</a></li>
+          <li class="tab col s2"><a href="#day4">Thursday</a></li>
+          <li class="tab col s2"><a href="#day5">Friday</a></li>
+          <li class="tab col s2"><a href="#day6">Saturday</a></li>
+          <li class="tab col s2"><a href="#day7">Sunday</a></li>
+        </ul>
+      </div>
+      <div id="day1" class="col s12"></div>
+      <div id="day2" class="col s12"></div>
+      <div id="day3" class="col s12"></div>
+      <div id="day4" class="col s12"></div>
+      <div id="day5" class="col s12"></div>
+      <div id="day6" class="col s12"></div>
+      <div id="day7" class="col s12"></div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
