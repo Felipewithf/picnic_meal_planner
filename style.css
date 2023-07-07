@@ -1,0 +1,52 @@
+    .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .Img {
+    max-width: 200px;
+    max-height: 00px;
+
+  }
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    scale: 60%;
+    padding: 1px;
+    border: 1px;
+    border: 1px;
+    margin: 1px;
+  }
+
+  .tabs .indicator {
+    background-color: #26a69a;
+  }
+  
+  .box {
+    width: 14%;
+    height: 200px;
+    border: 2px solid rgb(211, 94, 94);
+  }  
+
+  .tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: transparent;
+  }
+  
+  .weather-icon {
+    font-size: 4rem; 
+  }
+  
+  .animated {
+    animation-duration: 1s;
+  }
+
+  .nav{
+    color: blue;
+  }
+
+  .weather-icon {
+    font-size: 48px;
+    margin-right: 20px;
+    color: #333;
+  }
