@@ -8,6 +8,7 @@ AS A Canadian that enjoys summer and trying out new recipes
 I WANT to plan me picnic days to be sunny and full of new culinary explorations
 SO THAT I can enjoy my summer season to the fullest
 
+
 ## What does the app do
 
 - Display a 7-day planner
@@ -24,12 +25,16 @@ SO THAT I can enjoy my summer season to the fullest
 
 Rough concept of the userflow and app low fidelity prototype
 
+
 ![wireframing](./assets/img/screenshots/1.png)
+
 
 ## Environments
 
 coming soon..
 
+
 ## Testing
 
 coming soon..
+
