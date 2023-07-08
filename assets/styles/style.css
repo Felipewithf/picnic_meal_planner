@@ -2,6 +2,11 @@ body {
   padding-top: 20px;
 }
 
+#recipe-results .recipe-card{
+  display: inline-block;
+}
+
+
 .container {
   max-width: 1000px;
   margin: 0 auto;
