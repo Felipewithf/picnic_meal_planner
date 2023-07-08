@@ -2,9 +2,7 @@
 
 Find recipes for your picnic while you check the weather forecast!
 
-
 ## User Story
-
 
 AS A Canadian that enjoys summer and trying out new recipes
 I WANT to plan me picnic days to be sunny and full of new culinary explorations
@@ -23,12 +21,12 @@ SO THAT I can enjoy my summer season to the fullest
 - Display the recipe in the 7-day planner
 - Store the recipe name inside local storage so is available even if the users closes the window
 
-
 ## Wireframing
 
 Rough concept of the userflow and app low fidelity prototype
 
-![wireframing](img/screenshots/1.png)
+
+![wireframing](./assets/img/screenshots/1.png)
 
 
 ## Environments
@@ -36,7 +34,7 @@ Rough concept of the userflow and app low fidelity prototype
 coming soon..
 
 
-
 ## Testing
 
 coming soon..
+
