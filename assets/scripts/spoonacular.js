@@ -78,39 +78,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to create a recipe card
   function createRecipeCard(recipe) {
+    // Create the card container
     var card = document.createElement("div");
     card.classList.add("recipe-card");
 
-    // Recipe image
+    // Create the card image
     var image = document.createElement("img");
     image.src = recipe.image;
     image.alt = recipe.title;
+    image.classList.add("recipe-image");
     card.appendChild(image);
 
-    // Recipe content
+    // Create the card content
     var content = document.createElement("div");
     content.classList.add("recipe-content");
     card.appendChild(content);
 
-    // Recipe title
+    // Create the title element
     var title = document.createElement("h5");
     title.textContent = recipe.title;
+    title.classList.add("recipe-title");
     content.appendChild(title);
 
-    // Recipe ingredients
-    var ingredientsTitle = document.createElement("h6");
-    ingredientsTitle.textContent = "Ingredients:";
-    content.appendChild(ingredientsTitle);
+    // // Create the ingredients element
+    // var ingredients = document.createElement("ul");
+    // ingredients.classList.add("recipe-ingredients");
+    // recipe.ingredients.forEach(function (ingredient) {
+    //   var listItem = document.createElement("li");
+    //   listItem.textContent = ingredient;
+    //   ingredients.appendChild(listItem);
+    // });
+    // content.appendChild(ingredients);
 
-    var ingredients = document.createElement("ul");
-    ingredients.classList.add("recipe-ingredients");
-    recipe.ingredients.forEach(function (ingredient) {
-      var listItem = document.createElement("li");
-      listItem.textContent = ingredient;
-      ingredients.appendChild(listItem);
-    });
-    content.appendChild(ingredients);
-
+    // Return the completed card
     return card;
   }
 });
