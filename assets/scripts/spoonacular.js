@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     recipeResults.innerHTML = "";
 
     // API configuration
-    var apiKey = "68dfc415d3384f629db4dbe0916db7cb";
+    var apiKey = "f333b11c932045d8a56e644e90f0821c";
     var searchUrl = "https://api.spoonacular.com/recipes/complexSearch";
     var recipeUrl =
       "https://api.spoonacular.com/recipes/{recipeId}/information";
@@ -100,17 +100,62 @@ document.addEventListener("DOMContentLoaded", function () {
     title.classList.add("recipe-title");
     content.appendChild(title);
 
-    // // Create the ingredients element
-    // var ingredients = document.createElement("ul");
-    // ingredients.classList.add("recipe-ingredients");
-    // recipe.ingredients.forEach(function (ingredient) {
-    //   var listItem = document.createElement("li");
-    //   listItem.textContent = ingredient;
-    //   ingredients.appendChild(listItem);
-    // });
-    // content.appendChild(ingredients);
+    // Create the "View" button
+    var viewButton = document.createElement("button");
+    viewButton.textContent = "View";
+    viewButton.classList.add("view-button");
+    viewButton.addEventListener("click", function () {
+      displayRecipeDetails(recipe);
+    });
+    content.appendChild(viewButton);
 
     // Return the completed card
     return card;
+  }
+
+  // Function to display recipe details in a modal
+  function displayRecipeDetails(recipe) {
+    // Create the modal container
+    var modal = document.createElement("div");
+    modal.classList.add("modal");
+
+    // Create the modal content
+    var modalContent = document.createElement("div");
+    modalContent.classList.add("modal-content");
+
+    // Create the modal title
+    var modalTitle = document.createElement("h3");
+    modalTitle.textContent = recipe.title;
+
+    // Create the modal image
+    var modalImage = document.createElement("img");
+    modalImage.src = recipe.image;
+    modalImage.alt = recipe.title;
+
+    // Create the modal ingredients
+    var modalIngredients = document.createElement("ul");
+    modalIngredients.classList.add("modal-ingredients");
+    recipe.ingredients.forEach(function (ingredient) {
+      var listItem = document.createElement("li");
+      listItem.textContent = ingredient;
+      modalIngredients.appendChild(listItem);
+    });
+
+    // Append modal elements
+    modalContent.appendChild(modalTitle);
+    modalContent.appendChild(modalImage);
+    modalContent.appendChild(modalIngredients);
+    modal.appendChild(modalContent);
+
+    // Add close button to the modal
+    var closeButton = document.createElement("button");
+    closeButton.textContent = "Close";
+    closeButton.addEventListener("click", function () {
+      modal.remove(); // Remove the modal from the DOM
+    });
+    modalContent.appendChild(closeButton);
+
+    // Append modal to the document body
+    document.body.appendChild(modal);
   }
 });
