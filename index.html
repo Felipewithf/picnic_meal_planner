@@ -1,72 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
-  <link rel="stylesheet" href="/assets/styles/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css" />
-
-  <title>Meal Planner</title>
-</head>
-
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link rel="stylesheet" href="/assets/styles/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css" />
+    <title>Meal Planner</title>
+  </head>
+  <body>
     <nav class="nav">
       <a class="brand-logo">Picnic Planner</a>
     </nav>
-  <!-- logo -->
-  <div class="logo"><img src="assets/img/logo.png"></div>
 
-  <!-- user selection -->
-  <div class="container">
-    <div class="row">
-      <div class="col s6">
-        <div class="input-field col s8">
-          <input type="text" id="city-input">
-          <label for="city-input">Enter City Get Weather Forecast</label>
-        </div>
-        <div class="col s4">
-          <button class="btn waves-effect waves-light" id="search-btn">Search</button>
-        </div>
-      </div>
+    <!-- logo -->
+    <div class="logo"><img src="assets/img/logo.png" /></div>
 
-      <div class="col s6">
-        <div class="input-field col s8">
-          <input type="text" id="recipe-input">
-          <label for="recipe-input">Search for Recipes</label>
+    <!-- user selection -->
+    <div class="container">
+      <div class="row">
+        <div class="col s6">
+          <div class="input-field col s8">
+            <input type="text" id="city-input" />
+            <label for="city-input">Enter City Get Weather Forecast</label>
+          </div>
+          <div class="col s4">
+            <button class="btn waves-effect waves-light" id="search-btn">
+              Search
+            </button>
+          </div>
         </div>
-        <div class="col s4">
-          <button class="btn waves-effect waves-light" id="search-recipes-btn">Search</button>
+
+        <div class="col s6">
+          <div class="input-field col s8">
+            <input type="text" id="recipe-input" />
+            <label for="recipe-input">Search for Recipes</label>
+          </div>
+          <div class="col s4">
+            <button
+              class="btn waves-effect waves-light"
+              id="search-recipes-btn">
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Recipe Selection -->
-  <div id="recipe-results" class="recipe-container"></div>
+    <!-- Recipe Selection -->
+    <div id="recipe-results" class="recipe-container"></div>
 
-
-
-  <!-- user selection -->
-  <div class="col s12">
-    
-    <!-- Days for weekdays -->
-    <div class="row">
-
-      <div class="col s2">
-        <div class="card">
-          <div class="card-title">MON</div>
-          <div class="card-image"> 
-            <img src="assets/img/empty.jpg" class="responsive-img" alt="">
-          </div>
-          <div class="card-content">
-            <span id="day1">weather icon</span>
-            <span id="temp1">weather temperature</span>
-            <h5>Name of recipe</h5>
-          </div>   
-            <div class="card-action">
-                  <a href="#">More details</a>
+    <!-- user selection -->
+    <div class="col s12">
+      <!-- Days for weekdays -->
+      <div class="row drop">
+        <div class="col s2">
+          <div class="card">
+            <div class="card-title">MON</div>
+            <div class="card-image">
+              <img src="assets/img/empty.jpg" class="responsive-img" alt="" />
+            </div>
+            <div class="card-content drop-zone">
+              <span id="day1">weather icon</span>
+              <span id="temp1">weather temperature</span>
+              <h5 class="recipe-title">Name of recipe</h5>
+              <div class="recipe-content"></div>
             </div>
           </div>
         </div>
@@ -74,154 +76,101 @@
         <div class="col s2">
           <div class="card">
             <div class="card-title">TUE</div>
-            <div class="card-image"> 
-              <img src="assets/img/empty.jpg" class="responsive-img" alt="">
+            <div class="card-image">
+              <img src="assets/img/empty.jpg" class="responsive-img" alt="" />
             </div>
-            <div class="card-content">
+            <div class="card-content drop-zone">
               <span id="day2">weather icon</span>
               <span id="temp2">weather temperature</span>
-              <h5>Name of recipe</h5>
-            </div>   
-              <div class="card-action">
-                    <a href="#">More details</a>
-              </div>
+              <h5 class="recipe-title">Name of recipe</h5>
+              <div class="recipe-content"></div>
             </div>
-          </div>
-
-          <div class="col s2">
-            <div class="card">
-              <div class="card-title">WED</div>
-              <div class="card-image"> 
-                <img src="assets/img/empty.jpg" class="responsive-img" alt="">
-              </div>
-              <div class="card-content">
-                <span id="day3">weather icon</span>
-                <span id="temp3">weather temperature</span>
-                <h5>Name of recipe</h5>
-              </div>   
-                <div class="card-action">
-                      <a href="#">More details</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col s2">
-              <div class="card">
-                <div class="card-title">THU</div>
-                <div class="card-image"> 
-                  <img src="assets/img/empty.jpg" class="responsive-img" alt="">
-                </div>
-                <div class="card-content">
-                  <span id="day4">weather icon</span>
-                  <span id="temp4">weather temperature</span>
-                  <h5>Name of recipe</h5>
-                </div>   
-                  <div class="card-action">
-                        <a href="#">More details</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col s2">
-                <div class="card">
-                  <div class="card-title">FRI</div>
-                  <div class="card-image"> 
-                    <img src="assets/img/empty.jpg" class="responsive-img" alt="">
-                  </div>
-                  <div class="card-content">
-                    <span id="day5">weather icon</span>
-                    <span id="temp5">weather temperature</span>
-                    <h5>Name of recipe</h5>
-                  </div>   
-                    <div class="card-action">
-                          <a href="#">More details</a>
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-                 <!-- Days of the Weekend -->
-              <div class="row">
-
-                <div class="col s2">
-                  <div class="card">
-                    <div class="card-title">SAT</div>
-                    <div class="card-image"> 
-                      <img src="assets/img/empty.jpg" class="responsive-img" alt="">
-                    </div>
-                    <div class="card-content">
-                      <span id="day6">weather icon</span>
-                      <span id="temp6">weather temperature</span>
-                      <h5>Name of recipe</h5>
-                    </div>   
-                      <div class="card-action">
-                            <a href="#">More details</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col s2">
-                    <div class="card">
-                      <div class="card-title">SUN</div>
-                      <div class="card-image"> 
-                        <img src="assets/img/empty.jpg" class="responsive-img" alt="">
-                      </div>
-                      <div class="card-content">
-                        <span id="day7">weather icon</span>
-                        <span id="temp7">weather temperature</span>
-                        <h5>Name of recipe</h5>
-                      </div>   
-                        <div class="card-action">
-                              <a href="#">More details</a>
-                        </div>
-                      </div>
-                    </div>
-
-
-              </div>
-
-
-
-    
-
-
-      
-
-    </div>
-  </div>
-
-  <!-- <div class="row">
-        <div class="col s10">
-          <div class="row">
-            <div class="col s12">
-              <ul class="tabs">
-                <li class="tab col s2"><a href="#day1">Monday</a></li>
-                <li class="tab col s2"><a href="#day2">Tuesday</a></li>
-                <li class="tab col s2"><a href="#day3">Wednesday</a></li>
-                <li class="tab col s2"><a href="#day4">Thursday</a></li>
-                <li class="tab col s2"><a href="#day5">Friday</a></li>
-                <li class="tab col s2"><a href="#day6">Saturday</a></li>
-                <li class="tab col s2"><a href="#day7">Sunday</a></li>
-              </ul>
-            </div>
-            <div id="day1" class="col s12"></div>
-            <div id="day2" class="col s12"></div>
-            <div id="day3" class="col s12"></div>
-            <div id="day4" class="col s12"></div>
-            <div id="day5" class="col s12"></div>
-            <div id="day6" class="col s12"></div>
-            <div id="day7" class="col s12"></div>
           </div>
         </div>
-      </div> -->
 
+        <div class="col s2">
+          <div class="card">
+            <div class="card-title">WED</div>
+            <div class="card-image">
+              <img src="assets/img/empty.jpg" class="responsive-img" alt="" />
+            </div>
+            <div class="card-content drop-zone">
+              <span id="day3">weather icon</span>
+              <span id="temp3">weather temperature</span>
+              <h5 class="recipe-title">Name of recipe</h5>
+              <div class="recipe-content"></div>
+            </div>
+          </div>
+        </div>
 
+        <div class="col s2">
+          <div class="card">
+            <div class="card-title">THU</div>
+            <div class="card-image">
+              <img src="assets/img/empty.jpg" class="responsive-img" alt="" />
+            </div>
+            <div class="card-content drop-zone">
+              <span id="day4">weather icon</span>
+              <span id="temp4">weather temperature</span>
+              <h5 class="recipe-title">Name of recipe</h5>
+              <div class="recipe-content"></div>
+            </div>
+          </div>
+        </div>
 
+        <div class="col s2">
+          <div class="card">
+            <div class="card-title">FRI</div>
+            <div class="card-image">
+              <img src="assets/img/empty.jpg" class="responsive-img" alt="" />
+            </div>
+            <div class="card-content drop-zone">
+              <span id="day5">weather icon</span>
+              <span id="temp5">weather temperature</span>
+              <h5 class="recipe-title">Name of recipe</h5>
+              <div class="recipe-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="./assets/scripts/script.js"></script>
-  <script src="./assets/scripts/spoonacular.js"></script>
-</body>
+      <!-- Days of the Weekend -->
+      <div class="row">
+        <div class="col s2">
+          <div class="card">
+            <div class="card-title">SAT</div>
+            <div class="card-image">
+              <img src="assets/img/empty.jpg" class="responsive-img" alt="" />
+            </div>
+            <div class="card-content drop-zone">
+              <span id="day6">weather icon</span>
+              <span id="temp6">weather temperature</span>
+              <h5 class="recipe-title">Name of recipe</h5>
+              <div class="recipe-content"></div>
+            </div>
+          </div>
+        </div>
 
+        <div class="col s2">
+          <div class="card">
+            <div class="card-title">SUN</div>
+            <div class="card-image">
+              <img src="assets/img/empty.jpg" class="responsive-img" alt="" />
+            </div>
+            <div class="card-content drop-zone">
+              <span id="day7">weather icon</span>
+              <span id="temp7">weather temperature</span>
+              <h5 class="recipe-title">Drag Recipe Below Here</h5>
+              <div class="recipe-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./assets/scripts/script.js"></script>
+    <script src="./assets/scripts/spoonacular.js"></script>
+  </body>
 </html>
