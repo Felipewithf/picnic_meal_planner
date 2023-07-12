@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
               return response.json();
             })
             .then(function (recipeData) {
+              // Extract the recipe ingredients
               recipe.ingredients = recipeData.extendedIngredients.map(function (
                 ingredient,
               ) {
@@ -118,19 +119,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Display recipe details
   function displayRecipeDetails(recipe) {
+    // Create a modal element
     var modal = document.createElement("div");
     modal.classList.add("modal");
 
+    // Create the modal content
     var modalContent = document.createElement("div");
     modalContent.classList.add("modal-content");
 
+    // Create the modal title
     var modalTitle = document.createElement("h3");
     modalTitle.textContent = recipe.title;
 
+    // Create the modal image
     var modalImage = document.createElement("img");
     modalImage.src = recipe.image;
     modalImage.alt = recipe.title;
 
+    // Create the modal ingredients list
     var modalIngredients = document.createElement("ul");
     modalIngredients.classList.add("modal-ingredients");
     recipe.ingredients.forEach(function (ingredient) {
@@ -139,11 +145,13 @@ document.addEventListener("DOMContentLoaded", function () {
       modalIngredients.appendChild(listItem);
     });
 
+    // Append modal content to modal
     modalContent.appendChild(modalTitle);
     modalContent.appendChild(modalImage);
     modalContent.appendChild(modalIngredients);
     modal.appendChild(modalContent);
 
+    // Create the close button
     var closeButton = document.createElement("button");
     closeButton.textContent = "Close";
     closeButton.addEventListener("click", function () {
@@ -151,6 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     modalContent.appendChild(closeButton);
 
+    // Append the modal to the document body
     document.body.appendChild(modal);
   }
 
