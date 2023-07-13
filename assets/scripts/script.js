@@ -3,26 +3,40 @@ document.addEventListener("DOMContentLoaded", function () {
   var tabs = document.querySelectorAll(".tabs");
   M.Tabs.init(tabs);
 
+  currentDayIndex = "";
+  dayCounter = 0;
+
+  days.forEach(element => {
+    if (dayjs().format("ddd") === element) {
+      currentDayIndex = dayCounter;
+    }
+    dayCounter++;
+  });
+
+
   var cityInput = document.getElementById("city-input");
   var searchBtn = document.getElementById("search-btn");
 
   searchBtn.addEventListener("click", function () {
     var user_input = cityInput.value;
 
-    for (var i = 0; i < days.length; i++) {
-      var day = days[i];
-      var tabContent = document.querySelector("#day" + (i + 1));
-      tabContent.innerHTML = ""; // Clear existing content
+    // for (var i = 0; i < days.length; i++) {
+    //   var day = days[i];
+    //   var tabContent = document.querySelector("#day" + (i + 1));
+    //   tabContent.innerHTML = ""; // Clear existing content
 
-      // Get weather conditions
-      fetchWeatherConditions(day, tabContent, user_input);
-    }
+    //   // Get weather conditions
+    //   fetchWeatherConditions(day, tabContent, user_input);
+    // }
+
+    fetchWeatherConditions(user_input);
+
   });
 
-  function fetchWeatherConditions(day, tabContent, city) {
+  function fetchWeatherConditions(city) {
     // Weatherbit API request
     var weatherbitAPIKey = "1f39b117c040433c963f2301875dd3d8";
-    var weatherbitEndpoint = "https://api.weatherbit.io/v2.0/current";
+    var weatherbitEndpoint = "https://api.weatherbit.io/v2.0/forecast/daily/";
 
     var weatherbitParams = {
       key: weatherbitAPIKey,
@@ -32,73 +46,36 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(weatherbitEndpoint + "?" + new URLSearchParams(weatherbitParams))
       .then((response) => response.json())
       .then((data) => {
-        var weatherCode = data.data[0].weather.code;
+        
+        
+        var calendarIndex = currentDayIndex;
+        for (let index = 0; index < 7; index++) {
+          
+
+          console.log(calendarIndex);
+          //remove old
+        $(`#day${calendarIndex+1}`).empty();
+        $(`#temp${calendarIndex+1}`).text("");
 
         // Create weather icon element
-        var weatherIconElement = document.createElement("i");
-        weatherIconElement.classList.add("wi", "weather-icon");
+        var weatherIconElement = document.createElement("img");
+        weatherIconElement.classList.add("smallImg");
+        weatherIconElement.setAttribute("src", `https://cdn.weatherbit.io/static/img/icons/${data.data[index].weather.icon}.png`);
+        
+          // Append elements
+        $(`#day${calendarIndex+1}`).append(weatherIconElement);
+        $(`#temp${calendarIndex+1}`).text(data.data[index].temp);
 
-        // Set weather icon based on weather code
-        switch (weatherCode) {
-          case 200:
-          case 201:
-          case 202:
-          case 230:
-          case 231:
-          case 232:
-            weatherIconElement.classList.add("wi-thunderstorm");
-            break;
-          case 300:
-          case 301:
-          case 302:
-          case 500:
-          case 501:
-          case 502:
-          case 511:
-          case 520:
-          case 521:
-          case 522:
-          case 531:
-            weatherIconElement.classList.add("wi-rain");
-            break;
-          case 600:
-          case 601:
-          case 602:
-          case 610:
-          case 611:
-          case 612:
-          case 621:
-          case 622:
-            weatherIconElement.classList.add("wi-snow");
-            break;
-          case 701:
-          case 711:
-          case 721:
-          case 731:
-          case 741:
-          case 751:
-          case 761:
-          case 762:
-          case 771:
-          case 781:
-            weatherIconElement.classList.add("wi-fog");
-            break;
-          case 800:
-            weatherIconElement.classList.add("wi-day-sunny");
-            break;
-          case 801:
-          case 802:
-          case 803:
-          case 804:
-            weatherIconElement.classList.add("wi-cloudy");
-            break;
-          default:
-            weatherIconElement.classList.add("wi-na");
-            break;
+
+          calendarIndex = calendarIndex + 1;
+
+          if (calendarIndex > 6) {
+            calendarIndex = 0;
+          }
         }
 
-        // Append weather icon to tab content
-        tabContent.appendChild(weatherIconElement);
+        
+
       })
       .catch((error) => console.log(error));
   }
