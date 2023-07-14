@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-  padding-top: 20px;
+  padding-top: 0px;
 }
 
 .container {
@@ -19,7 +19,7 @@ nav .nav {
 }
 
 .logo img {
-  width: 200px;
+  width: 400px;
 }
 
 /* Recipe Cards */
@@ -128,4 +128,68 @@ nav .nav {
   padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+/* Added Styles for Search Input Boxes */
+.search-input {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.search-input input[type="text"],
+.search-input button {
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.search-input input[type="text"] {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(232, 76, 126, 0.3);
+  width: 200px;
+  padding-left: 35px; /* Added padding to accommodate the search memo */
+}
+
+.search-input button {
+  background-color: #8bcbc5;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(232, 76, 126, 0.3);
+  cursor: pointer;
+  border-radius: 30px; /* Added border-radius for rounded shape */
+  padding: 10px 20px; /* Adjusted padding to match search box */
+  margin-left: -5px; /* Adjusted margin to match search box */
+}
+
+.search-input input[type="text"]:focus,
+.search-input button:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(232, 76, 126, 0.7);
+}
+
+.search-input button:hover {
+  background-color: #26a69a;
+}
+
+/* Centering the Calendar */
+.row.drop {
+  justify-content: center;
+}
+
+/* Adjusting the Weekday Spacing */
+.row.drop .col.s2 {
+  flex-basis: 14%;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.row.drop .card {
+  width: 100%;
+}
+
+.row.drop .card:not(:first-child) {
+  margin-left: 10px;
 }
