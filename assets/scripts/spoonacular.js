@@ -1,7 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Search button event listener
   var searchBtn = document.getElementById("search-recipes-btn");
   searchBtn.addEventListener("click", searchRecipes);
+
+  var recipeCards = [];
+
+  var recipeCardMap = {
+    MON: [],
+    TUE: [],
+    WED: [],
+    THUR: [],
+    FRI: [],
+    SAT: [],
+    SUN: [],
+  };
 
   function searchRecipes() {
     // Retrieve the recipe input and clear the recipe results
@@ -36,30 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return response.json();
       })
       .then(function (data) {
-        // Process the recipe details
-        var recipePromises = data.results.map(function (recipe) {
-          var recipeDetailsUrl =
-            recipeUrl.replace("{recipeId}", recipe.id) + "?apiKey=" + apiKey;
-          return fetch(recipeDetailsUrl)
-            .then(function (response) {
-              return response.json();
-            })
-            .then(function (recipeData) {
-              // Extract the recipe ingredients
-              recipe.ingredients = recipeData.extendedIngredients.map(function (
-                ingredient,
-              ) {
-                return ingredient.original;
-              });
-              return recipe;
-            });
-        });
-
-        return Promise.all(recipePromises);
-      })
-      .then(function (recipeDetails) {
         // Display the recipe details
-        recipeDetails.forEach(function (recipe) {
+        data.results.forEach(function (recipe) {
           var card = createRecipeCard(recipe);
           recipeResults.appendChild(card);
         });
@@ -99,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
     viewButton.textContent = "View Recipe";
     viewButton.classList.add("view-button");
     viewButton.addEventListener("click", function () {
-      displayRecipeDetails(recipe);
+      fetchRecipeDetails(recipe.id);
     });
     content.appendChild(viewButton);
 
@@ -109,49 +98,66 @@ document.addEventListener("DOMContentLoaded", function () {
       event.dataTransfer.setData("text/plain", recipe.id);
     });
 
+    recipeCards.push(card);
+
     return card;
   }
 
-  // Delete recipe card
-  function deleteRecipeCard(card) {
-    card.remove();
+  // Fetch recipe details including ingredients
+  function fetchRecipeDetails(recipeId) {
+    var apiKey = "f333b11c932045d8a56e644e90f0821c";
+    var recipeUrl =
+      "https://api.spoonacular.com/recipes/" +
+      recipeId +
+      "/information?apiKey=" +
+      apiKey;
+
+    fetch(recipeUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (recipeData) {
+        var ingredients = recipeData.extendedIngredients.map(function (
+          ingredient,
+        ) {
+          return ingredient.original;
+        });
+
+        displayRecipeDetails(recipeData.title, recipeData.image, ingredients);
+      })
+      .catch(function (error) {
+        console.log("Error:", error);
+      });
   }
 
   // Display recipe details
-  function displayRecipeDetails(recipe) {
-    // Create a modal element
+  function displayRecipeDetails(title, image, ingredients) {
     var modal = document.createElement("div");
     modal.classList.add("modal");
 
-    // Create the modal content
     var modalContent = document.createElement("div");
     modalContent.classList.add("modal-content");
 
-    // Create the modal title
     var modalTitle = document.createElement("h3");
-    modalTitle.textContent = recipe.title;
+    modalTitle.textContent = title;
 
-    // Create the modal image
     var modalImage = document.createElement("img");
-    modalImage.src = recipe.image;
-    modalImage.alt = recipe.title;
+    modalImage.src = image;
+    modalImage.alt = title;
 
-    // Create the modal ingredients list
     var modalIngredients = document.createElement("ul");
     modalIngredients.classList.add("modal-ingredients");
-    recipe.ingredients.forEach(function (ingredient) {
+    ingredients.forEach(function (ingredient) {
       var listItem = document.createElement("li");
       listItem.textContent = ingredient;
       modalIngredients.appendChild(listItem);
     });
 
-    // Append modal content to modal
     modalContent.appendChild(modalTitle);
     modalContent.appendChild(modalImage);
     modalContent.appendChild(modalIngredients);
     modal.appendChild(modalContent);
 
-    // Create the close button
     var closeButton = document.createElement("button");
     closeButton.textContent = "Close";
     closeButton.addEventListener("click", function () {
@@ -159,8 +165,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     modalContent.appendChild(closeButton);
 
-    // Append the modal to the document body
     document.body.appendChild(modal);
+  }
+
+  // Delete recipe card
+  function deleteRecipeCard(card) {
+    var index = recipeCards.indexOf(card);
+    if (index !== -1) {
+      recipeCards.splice(index, 1);
+    }
+    card.remove();
   }
 
   // Handle drop event
@@ -176,9 +190,21 @@ document.addEventListener("DOMContentLoaded", function () {
       var dropZone = event.target.closest(".drop-zone");
 
       if (dropZone) {
-        dropZone.appendChild(recipeCard);
+        var currentDropZone = recipeCard.closest(".drop-zone");
+        if (currentDropZone) {
+          var deleteButton = currentDropZone.querySelector(".delete-button");
+          recipeCardMap[currentDropZone.id].splice(
+            recipeCardMap[currentDropZone.id].indexOf(recipeCard),
+            1,
+          );
+          if (deleteButton) {
+            deleteButton.remove();
+          }
+        }
 
-        // Add delete button dynamically
+        dropZone.appendChild(recipeCard);
+        recipeCardMap[dropZone.id].push(recipeCard);
+
         var deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("delete-button");
@@ -186,9 +212,6 @@ document.addEventListener("DOMContentLoaded", function () {
           deleteRecipeCard(recipeCard);
         });
         recipeCard.querySelector(".recipe-content").appendChild(deleteButton);
-
-        var recipeDetails = getRecipeDetails(recipeId);
-        displayRecipeDetails(recipeDetails);
       }
     }
   }
@@ -212,9 +235,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var dropZones = document.querySelectorAll(".drop-zone");
   dropZones.forEach(function (dropZone) {
-    // Add event listeners for drop zone
     dropZone.addEventListener("drop", handleDrop);
     dropZone.addEventListener("dragover", handleDragOver);
     dropZone.addEventListener("dragleave", handleDragLeave);
+  });
+
+  function saveRecipesToLocalStorage() {
+    // Save the recipe card IDs for each day to local storage
+    for (var key in recipeCardMap) {
+      var recipeIds = recipeCardMap[key].map(function (recipeCard) {
+        return recipeCard.dataset.id;
+      });
+      localStorage.setItem(key, JSON.stringify(recipeIds));
+    }
+  }
+
+  function loadSavedRecipes() {
+    // Load the saved recipe cards from local storage and place them in the corresponding drop zones
+    for (var key in recipeCardMap) {
+      if (localStorage.getItem(key)) {
+        var recipeIds = JSON.parse(localStorage.getItem(key));
+        recipeIds.forEach(function (recipeId) {
+          var recipeCard = document.querySelector(
+            ".recipe-card[data-id='" + recipeId + "']",
+          );
+          if (recipeCard) {
+            recipeCardMap[key].push(recipeCard);
+            var dropZone = document.getElementById(key);
+            dropZone.appendChild(recipeCard);
+          }
+        });
+      }
+    }
+  }
+
+  // Load saved recipes when the page is loaded
+  loadSavedRecipes();
+
+  // Save recipes to local storage before the page is unloaded
+  window.addEventListener("beforeunload", function () {
+    saveRecipesToLocalStorage();
   });
 });
