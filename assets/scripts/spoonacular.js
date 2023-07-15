@@ -230,14 +230,19 @@ document.addEventListener("DOMContentLoaded", function () {
         dropZone.appendChild(recipeCard);
         recipeCardMap[dropZone.id].push(recipeCard);
 
-        // Create the delete button
-        var deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.classList.add("delete-button");
-        deleteButton.addEventListener("click", function () {
-          deleteRecipeCard(recipeCard);
-        });
-        recipeCard.querySelector(".recipe-content").appendChild(deleteButton);
+        var existingDeleteButton = recipeCard.querySelector(".delete-button");
+
+        // Check if the delete button doesn't exist
+        if (!existingDeleteButton) {
+          // Create the delete button
+          var deleteButton = document.createElement("button");
+          deleteButton.textContent = "Delete";
+          deleteButton.classList.add("delete-button");
+          deleteButton.addEventListener("click", function () {
+            deleteRecipeCard(recipeCard);
+          });
+          recipeCard.querySelector(".recipe-content").appendChild(deleteButton);
+        }
       }
     }
 
