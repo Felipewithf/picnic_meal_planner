@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Retrieve the search button element
   var searchBtn = document.getElementById("search-recipes-btn");
   searchBtn.addEventListener("click", searchRecipes);
 
+  // Array to store recipe cards
   var recipeCards = [];
 
+  // Object to map recipe cards to days of the week
   var recipeCardMap = {
     MON: [],
     TUE: [],
@@ -14,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     SUN: [],
   };
 
+  // Function to handle recipe search
   function searchRecipes() {
     // Retrieve the recipe input and clear the recipe results
     var recipeInput = document.getElementById("recipe-input").value;
@@ -21,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     recipeResults.innerHTML = "";
 
     // Set the API key and URLs
-    var apiKey = "f333b11c932045d8a56e644e90f0821c";
+    var apiKey = "7c607f931c8643b38454af560516623b";
     var searchUrl = "https://api.spoonacular.com/recipes/complexSearch";
     var recipeUrl =
       "https://api.spoonacular.com/recipes/{recipeId}/information";
@@ -58,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Create recipe card
+  // Function to create a recipe card
   function createRecipeCard(recipe) {
     // Create the recipe card element
     var card = document.createElement("div");
@@ -92,6 +96,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     content.appendChild(viewButton);
 
+    // Create the delete button
+    var deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.classList.add("delete-button");
+    deleteButton.addEventListener("click", function () {
+      deleteRecipeCard(card);
+    });
+    content.appendChild(deleteButton);
+
     // Set the draggable attribute
     card.draggable = true;
     card.addEventListener("dragstart", function (event) {
@@ -103,14 +116,35 @@ document.addEventListener("DOMContentLoaded", function () {
     return card;
   }
 
-  // Fetch recipe details including ingredients
+  // Function to delete a recipe card
+  function deleteRecipeCard(card) {
+    var recipeId = card.dataset.id;
+
+    for (var key in recipeCardMap) {
+      var index = recipeCardMap[key].findIndex(function (card) {
+        return card.dataset.id === recipeId;
+      });
+
+      if (index !== -1) {
+        recipeCardMap[key].splice(index, 1);
+        localStorage.setItem(
+          key,
+          JSON.stringify(
+            recipeCardMap[key].map(function (card) {
+              return card.dataset.id;
+            }),
+          ),
+        );
+      }
+    }
+
+    card.remove();
+  }
+
+  // Function to fetch recipe details including ingredients
   function fetchRecipeDetails(recipeId) {
-    var apiKey = "f333b11c932045d8a56e644e90f0821c";
-    var recipeUrl =
-      "https://api.spoonacular.com/recipes/" +
-      recipeId +
-      "/information?apiKey=" +
-      apiKey;
+    var apiKey = "7c607f931c8643b38454af560516623b";
+    var recipeUrl = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
 
     fetch(recipeUrl)
       .then(function (response) {
@@ -130,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Display recipe details
+  // Function to display recipe details in a modal
   function displayRecipeDetails(title, image, ingredients) {
     var modal = document.createElement("div");
     modal.classList.add("modal");
@@ -168,16 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(modal);
   }
 
-  // Delete recipe card
-  function deleteRecipeCard(card) {
-    var index = recipeCards.indexOf(card);
-    if (index !== -1) {
-      recipeCards.splice(index, 1);
-    }
-    card.remove();
-  }
-
-  // Handle drop event
+  // Function to handle the drop event
   function handleDrop(event) {
     event.preventDefault();
 
@@ -205,18 +230,17 @@ document.addEventListener("DOMContentLoaded", function () {
         dropZone.appendChild(recipeCard);
         recipeCardMap[dropZone.id].push(recipeCard);
 
-        var deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.classList.add("delete-button");
         deleteButton.addEventListener("click", function () {
           deleteRecipeCard(recipeCard);
         });
         recipeCard.querySelector(".recipe-content").appendChild(deleteButton);
       }
     }
+
+    saveRecipesToLocalStorage();
   }
 
-  // Handle drag over event
+  // Function to handle the drag over event
   function handleDragOver(event) {
     event.preventDefault();
     var dropZone = event.target.closest(".drop-zone");
@@ -225,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Handle drag leave event
+  // Function to handle the drag leave event
   function handleDragLeave(event) {
     var dropZone = event.target.closest(".drop-zone");
     if (dropZone) {
@@ -233,6 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Add event listeners for drop zones
   var dropZones = document.querySelectorAll(".drop-zone");
   dropZones.forEach(function (dropZone) {
     dropZone.addEventListener("drop", handleDrop);
@@ -240,8 +265,8 @@ document.addEventListener("DOMContentLoaded", function () {
     dropZone.addEventListener("dragleave", handleDragLeave);
   });
 
+  // Function to save recipe cards to local storage
   function saveRecipesToLocalStorage() {
-    // Save the recipe card IDs for each day to local storage
     for (var key in recipeCardMap) {
       var recipeIds = recipeCardMap[key].map(function (recipeCard) {
         return recipeCard.dataset.id;
@@ -250,30 +275,61 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Function to load saved recipe cards from local storage
   function loadSavedRecipes() {
-    // Load the saved recipe cards from local storage and place them in the corresponding drop zones
     for (var key in recipeCardMap) {
       if (localStorage.getItem(key)) {
-        var recipeIds = JSON.parse(localStorage.getItem(key));
+        var recipeIds = JSON.parse(localStorage.getItem(key)) || [];
         recipeIds.forEach(function (recipeId) {
-          var recipeCard = document.querySelector(
-            ".recipe-card[data-id='" + recipeId + "']",
-          );
-          if (recipeCard) {
-            recipeCardMap[key].push(recipeCard);
-            var dropZone = document.getElementById(key);
-            dropZone.appendChild(recipeCard);
+          // Check if the recipe card already exists
+          var existingCard = recipeCards.find(function (card) {
+            return card.dataset.id === recipeId;
+          });
+
+          // If the card doesn't exist, render it
+          if (!existingCard) {
+            var recipeCard = renderCard(recipeId, key);
+            if (recipeCard) {
+              recipeCardMap[key].push(recipeCard);
+              var dropZone = document.getElementById(key);
+              dropZone.appendChild(recipeCard);
+            }
           }
         });
+      } else {
+        localStorage.setItem(key, JSON.stringify([]));
       }
     }
   }
 
-  // Load saved recipes when the page is loaded
-  loadSavedRecipes();
+  // Function to render a recipe card based on the recipe ID and key
+  function renderCard(recipeId, keyID) {
+    var apiKey = "7c607f931c8643b38454af560516623b";
+    var recipeUrl = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
 
-  // Save recipes to local storage before the page is unloaded
-  window.addEventListener("beforeunload", function () {
-    saveRecipesToLocalStorage();
-  });
+    fetch(recipeUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (recipeData) {
+        var card = createRecipeCard(recipeData);
+        var dropZone = document.getElementById(keyID);
+        if (dropZone) {
+          dropZone.appendChild(card);
+          recipeCardMap[dropZone.id].push(card);
+        }
+      })
+      .catch(function (error) {
+        console.log("Error:", error);
+      });
+  }
+
+  // Function to check if a recipe ID exists in local storage for a given key
+  function storageCheck(recipeID, keyID) {
+    var recipeIds = JSON.parse(localStorage.getItem(keyID)) || [];
+    return recipeIds.includes(recipeID);
+  }
+
+  // Load saved recipes on page load
+  loadSavedRecipes();
 });
