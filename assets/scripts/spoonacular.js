@@ -230,6 +230,10 @@ document.addEventListener("DOMContentLoaded", function () {
         dropZone.appendChild(recipeCard);
         recipeCardMap[dropZone.id].push(recipeCard);
 
+        // Create the delete button
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.classList.add("delete-button");
         deleteButton.addEventListener("click", function () {
           deleteRecipeCard(recipeCard);
         });
