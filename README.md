@@ -23,9 +23,7 @@ Find recipes for your picnic while you check the weather forecast!
 
 Rough concept of the userflow and app low fidelity prototype
 ![wireframing](./assets/img/screenshots/1.png)
-![UI on landing page](./assets/img/screenshots/2.png)
-![Display of recipes and weather icons](./assets/img/screenshots/3.png)
-![recipes under each day](./assets/img/screenshots/4.png)
+
 
 ## Environments
 
@@ -54,7 +52,7 @@ We used the following libraries and API
 
 - DayJS  
   https://day.js.org/en/
-- Jquery  
+- Jquery  å
   https://jquery.com/
 
 ### Third-Party APIs
@@ -66,4 +64,6 @@ We used the following libraries and API
 
 ## Final Design
 
-comming soon...
+![UI on landing page](./assets/img/screenshots/2.png)
+![Display of recipes and weather icons](./assets/img/screenshots/3.png)
+![recipes under each day](./assets/img/screenshots/4.png)å
